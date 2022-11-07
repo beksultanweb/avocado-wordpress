@@ -1,0 +1,25 @@
+.articles {
+    background-color: #f2f8e9;
+    padding-top: 42px;
+    padding-bottom: 117px;
+}
+.articles__content {
+    display: flex;
+    gap: 37px;
+}
+.articles__img {
+    width: 100%;
+    border-radius: 15px;
+}
+.article__title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 17px;
+}
+
+@media (max-width: 992px) {
+    .articles__content {
+        flex-wrap: wrap;
+    }
+}

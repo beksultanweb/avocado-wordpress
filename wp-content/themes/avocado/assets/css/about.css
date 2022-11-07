@@ -1,0 +1,29 @@
+.about {
+    background-color: #f2f8e9;
+}
+.about__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 63px 35px 76px 35px;
+    gap: 37px
+}
+.about__title {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000000;
+}
+p {
+    font-size: 18px;
+    font-weight: 300;
+    color: #000000;
+}
+
+@media (max-width: 640px) {
+    .about__title {
+        margin-top: 0;
+    }
+    .about__content {
+        display: flex;
+        flex-direction: column;
+    }
+}

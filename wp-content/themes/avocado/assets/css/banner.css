@@ -1,0 +1,80 @@
+.banner-wrapper, .dot {
+    display: inline-block;
+    vertical-align: middle;
+}
+.banner-wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 500px;
+    position: relative;
+    border-radius: 20px;
+}
+.banner-slide {
+    position: relative;
+    width: 100%;
+}
+.banner-line {
+    display: flex;
+    position: relative;
+    left: 0;
+    transition: 1s;
+}
+.dots-wrapper {
+    position: absolute;
+    left: 66px;
+    bottom: 50px;
+    display: flex;
+    gap: 12px;
+}
+.dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    opacity: 0.35;
+    background-color: #82b723;
+}
+.dot:hover, .dot_active {
+    opacity: 1;
+}
+.banner-info {
+    position: absolute;
+    top: 119px;
+    left: 66px;
+}
+h1 {
+    font-size: 48px;
+    font-weight: 300;
+    max-width: 650px;
+    color: #ffffff;
+}
+.banner-btn {
+    background-color: #82b723;
+    font-size: 18px;
+    font-weight: 300;
+    color: #ffffff;
+    padding: 22px 43px 22px 43px;
+}
+
+@media (max-width: 640px) {
+    h1 {
+        font-size: 34px;
+    }
+    .banner-info {
+        top: 100px;
+        left: 50px;
+    }
+}
+@media (max-width: 600px) {
+    .banner-info {
+        left: 30px;
+        padding-right: 20px;
+    }
+}
+@media (max-width: 358px) {
+    h1 {
+        font-size: 30px;
+    }
+    .banner-btn {
+        padding: 20px;
+    }
+}

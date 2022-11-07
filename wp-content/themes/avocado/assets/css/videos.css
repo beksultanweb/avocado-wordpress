@@ -1,0 +1,15 @@
+.videos__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 69px;
+    margin-bottom: 69px;
+    gap: 48px;
+}
+
+@media (max-width: 992px) {
+    .videos__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
