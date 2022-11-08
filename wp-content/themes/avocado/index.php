@@ -21,6 +21,7 @@
                                     <img class="banner-img" src="<?php the_field('banner_img') ?>" alt="banner">
                                     <div class="banner-info">
                                         <h1
+                                        class="banner-title"
                                         style="
                                         <?php
                                             $field = get_field('color_h1');

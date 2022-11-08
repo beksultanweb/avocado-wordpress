@@ -41,7 +41,7 @@
     top: 119px;
     left: 66px;
 }
-h1 {
+.banner-title {
     font-size: 48px;
     font-weight: 300;
     max-width: 650px;
@@ -56,7 +56,7 @@ h1 {
 }
 
 @media (max-width: 640px) {
-    h1 {
+    .banner-title {
         font-size: 34px;
     }
     .banner-info {
@@ -71,7 +71,7 @@ h1 {
     }
 }
 @media (max-width: 358px) {
-    h1 {
+    .banner-title {
         font-size: 30px;
     }
     .banner-btn {
