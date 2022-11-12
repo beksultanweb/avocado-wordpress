@@ -121,19 +121,19 @@
                                 setup_postdata($post)
                                 ?>
                                     <div class="tabs__item">
-                                        <img class="tabs__img" src="<?php the_field('hot_img'); ?>" alt="property">
+                                        <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
                                                 <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
-                                                <div class="tabs__subtitle"><?php the_field('hot_rooms'); ?></div>
+                                                <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
                                                 <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
-                                                <div class="tabs__subtitle"><?php the_field('hot_square'); ?> кв.м.</div>
+                                                <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                                             </div>
                                         </div>
-                                        <button class="tabs__btn"><?php the_field('hot_price'); ?> EUR</button>
+                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn"><?php the_field('property_price'); ?> EUR</button></a>
                                     </div>
                                 <?php
                             }
@@ -154,19 +154,19 @@
                                 setup_postdata($post)
                                 ?>
                                     <div class="tabs__item">
-                                        <img class="tabs__img" src="<?php the_field('new_img'); ?>" alt="property">
+                                        <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
                                                 <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
-                                                <div class="tabs__subtitle"><?php the_field('new_rooms'); ?></div>
+                                                <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
                                                 <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
-                                                <div class="tabs__subtitle"><?php the_field('new_square'); ?></div>
+                                                <div class="tabs__subtitle"><?php the_field('property_square'); ?></div>
                                             </div>
                                         </div>
-                                        <button class="tabs__btn"><?php the_field('new_price'); ?> EUR</button>
+                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn"><?php the_field('property_price'); ?> EUR</button></a>
                                     </div>
                                 <?php
                             }

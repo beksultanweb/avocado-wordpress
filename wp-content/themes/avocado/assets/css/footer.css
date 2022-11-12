@@ -30,7 +30,7 @@
     gap: 8px;
 }
 
-@media (max-width: 795px) {
+@media (max-width: 889px) {
     .footer1 {
         display: none;
     }
