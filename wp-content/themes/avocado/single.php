@@ -53,7 +53,11 @@ get_header();
                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                             </div>
                         </div>
-                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn"><?php the_field('property_price'); ?> EUR</button></a>
+                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                            <?php
+                                $price = get_field('property_price');
+                                echo number_format($price, 0, ',', ' ');
+                            ?> EUR</button></a>
                     </div>
                 <?php
             }

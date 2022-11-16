@@ -3,55 +3,54 @@
 ?>
     <section class="banner">
         <div class="container">
-            <div class="banner-wrapper">
-                <div class="banner-line">
-                    <?php
-                        $posts = get_posts( array(
-                            'numberposts' => -1,
-                            'category_name' => 'banner',
-                            'orderBy' => 'date',
-                            'order' => 'ASC',
-                            'post_type' => 'post',
-                            'suppress_filters' => true,
-                        ));
-                        foreach( $posts as $post ) {
-                            setup_postdata($post)
-                            ?>
-                                <div class="banner-slide">
-                                    <img class="banner-img" src="<?php the_field('banner_img') ?>" alt="banner">
-                                    <div class="banner-info">
-                                        <h1
-                                        class="banner-title"
-                                        style="
-                                        <?php
-                                            $field = get_field('color_h1');
-                                            if ($field == 'dark') {
-                                                ?>
-                                                    color: #000;
-                                                <?php
-                                            }
-                                        ?>
-                                        "
-                                        ><?php the_title(); ?></h1>
-                                        <?php
-                                            $field = get_field('button');
-                                            if ($field == 'on') {
-                                                ?>
-                                                    <a href="<?php the_field('banner_link') ?>"><button class="banner-btn">Посмотреть объекты</button></a>
-                                                <?php
-                                            }
-                                        ?>
+            <div class="banner__content">
+                <div class="banner-wrapper">
+                    <div class="banner-line">
+                        <?php
+                            $posts = get_posts( array(
+                                'numberposts' => -1,
+                                'category_name' => 'banner',
+                                'orderBy' => 'date',
+                                'order' => 'ASC',
+                                'post_type' => 'post',
+                                'suppress_filters' => true,
+                            ));
+                            foreach( $posts as $post ) {
+                                setup_postdata($post)
+                                ?>
+                                    <div class="banner-slide" style="background: url(<?php the_field('banner_img'); ?>); background-size: cover;">
+                                        <!-- <img class="banner-img" src="" alt="banner"> -->
+                                        <div class="banner-info">
+                                            <h1
+                                            class="banner-title"
+                                            style="
+                                            <?php
+                                                $field = get_field('color_h1');
+                                                if ($field == 'dark') {
+                                                    ?>
+                                                        color: #000;
+                                                    <?php
+                                                }
+                                            ?>
+                                            "
+                                            ><?php the_title(); ?></h1>
+                                            <?php
+                                                $field = get_field('button');
+                                                if ($field == 'on') {
+                                                    ?>
+                                                        <a href="<?php the_field('banner_link') ?>"><button class="banner-btn">Посмотреть объекты</button></a>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php
-                        }
-                        wp_reset_postdata();
-                    ?>
+                                <?php
+                            }
+                            wp_reset_postdata();
+                        ?>
+                    </div>
                 </div>
                 <div class="dots-wrapper">
-                    <div class="dot dot_active"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
                 </div>
             </div>
         </div>
@@ -60,49 +59,117 @@
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
             <div class="search__body">
-                <label class="search__label">Местоположение
-                    <select name="location" id="location">
-                        <option value="">Выбрать...</option>
+                <form action="search" method="GET">
+                <?php
+                    $posts = get_posts( array(
+                            'category' => array(6, 7),
+                            'numberposts' => -1,
+                            'orderby' => 'date',
+                            'order' => 'DESC',
+                            'post_type' => 'post',
+                            'suppress_filters' => true
+                    ));
+                    ?>
+                    <label class="search__label">Местоположение
+                    <select name="location" id="location" multiple>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value="<?php the_field('property_location'); ?>"><?php the_field('property_location'); ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
-                <label class="search__label">Вид недвижимости
-                    <select name="type" id="type">
-                        <option value="">Выбрать...</option>
+                    </label>
+                    <label class="search__label">Вид недвижимости
+                    <select name="type" id="type" multiple>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value="<?php the_field('property_type'); ?>"><?php the_field('property_type'); ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
-                <label class="search__label">Количество комнат
+                    </label>
+                    <label class="search__label">Количество комнат
                     <select name="rooms-number" id="rooms-number">
-                        <option value="">Выбрать...</option>
+                        <option value="" selected>Любой комнатности</option>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value="<?php the_field('property_rooms'); ?>"><?php the_field('property_rooms'); ?>-комнатный</option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
-                <label class="search__label">Диапазон цен
-                    <select name="diapason" id="diapason">
-                        <option value="">Выбрать...</option>
-                    </select>
-                </label>
-                <label class="search__label">Поиск по ID номеру
+                    </label>
+                    <label class="search__label">Цена
+                        <?php
+                        $prices = array();
+                        foreach( $posts as $post ) {
+                            setup_postdata($post);
+                            $price = (int)get_field('property_price');
+                            // $exp_price = explode(' ', $price).join();
+                            if(isset($price) && !empty($price)){
+                                $prices[] = $price;
+                            }
+                        }
+                        ?>
+                        <input type="number" name="minprice" value="<?php echo min($prices); ?>">
+                        <input type="number" name="maxprice" value="<?php echo max($prices); ?>">
+                    </label>
+                    <label class="search__label">Поиск по ID номеру
                     <select name="id" id="id">
-                        <option value="">Выбрать...</option>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value=""><?php echo $post->ID ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
-                <label class="search__label">Год постройки
+                    </label>
+                    <label class="search__label">Год постройки
                     <select name="built-year" id="built-year">
-                        <option value="">Выбрать...</option>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value=""><?php the_field('property_date'); ?></option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
-                <label class="search__label">Расстояние до моря
+                    </label>
+                    <label class="search__label">Расстояние до моря
                     <select name="distance-to-sea" id="distance-to-sea">
-                        <option value="">Выбрать...</option>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value=""></option>
+                            <?php
+                        }
+                        ?>
                     </select>
-                </label>
+                    </label>
+                    <?php
+                    wp_reset_postdata();
+                ?>
                 <button class="search__btn">Поиск</button>
+                </form>
             </div>
         </div>
     </section>
     <main>
         <div class="container">
             <div class="active__tabs">
-                <input type="radio" name="active__tabs" id="btn-1" class="btn-1" checked>
+                <input type="radio" name="active__tabs" id="btn-1" class="btn-1">
                 <label for="btn-1" class="btn">Горячие предложения</label>
                 <input type="radio" name="active__tabs" id="btn-2" class="btn-2">
                 <label for="btn-2" class="btn">Новые объекты</label>
@@ -110,7 +177,7 @@
                     <div class="tabs__block">
                         <?php
                             $posts = get_posts( array(
-                                'numberposts' => -1,
+                                'numberposts' => 6,
                                 'category_name' => 'hot_deals',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
@@ -133,7 +200,11 @@
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn"><?php the_field('property_price'); ?> EUR</button></a>
+                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                            <?php
+                                                $price = get_field('property_price');
+                                                echo number_format($price, 0, ',', ' ');
+                                            ?> EUR</button></a>
                                     </div>
                                 <?php
                             }
@@ -143,7 +214,7 @@
                     <div class="tabs__block">
                         <?php
                             $posts = get_posts( array(
-                                'numberposts' => -1,
+                                'numberposts' => 6,
                                 'category_name' => 'new_objects',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
@@ -166,14 +237,18 @@
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?></div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn"><?php the_field('property_price'); ?> EUR</button></a>
+                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                            <?php
+                                            $price = get_field('property_price');
+                                            echo number_format($price, 0, ',', ' ');
+                                            ?> EUR</button></a>
                                     </div>
                                 <?php
                             }
                             wp_reset_postdata();
                         ?>
                     </div>
-                    <button class="see_more">Посмотреть еще</button>
+                    <a href="<?php echo get_permalink(92) ?>"><button class="see_more">Посмотреть еще</button></a>
                 </div>
             </div>
         </div>
@@ -234,9 +309,6 @@
                 </div>
             </div>
             <div class="testimonal-dots-wrapper">
-                <div class="testimonal-dot testimonal-dot_active"></div>
-                <div class="testimonal-dot"></div>
-                <div class="testimonal-dot"></div>
             </div>
         </div>
     </section>

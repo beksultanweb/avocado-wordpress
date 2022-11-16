@@ -3,7 +3,10 @@
         <div class="container">
             <div class="property-photos__info">
                 <h1 class="property-photos__title"><?php the_title(); ?></h1>
-                <div class="property-photos__price">от € <?php the_field('property_price'); ?></div>
+                <div class="property-photos__price">от €
+                    <?php $price = get_field('property_price');
+                        echo number_format($price, 0, ',', ' ');
+                    ?></div>
             </div>
             <div class="property-photos__content">
                 <div class="property-photos__body">
