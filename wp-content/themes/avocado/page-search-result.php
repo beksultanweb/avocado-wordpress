@@ -6,6 +6,127 @@ Template Name: Search results
 <?php
     get_header();
 ?>
+<section class="search">
+        <div class="container">
+            <h2 class="title">Поиск недвижимости</h2>
+            <div>
+                <form class="search__body" action="search" method="GET">
+                <?php
+                    $posts = get_posts( array(
+                            'category' => array(6, 7),
+                            'numberposts' => -1,
+                            'orderby' => 'date',
+                            'order' => 'DESC',
+                            'post_type' => 'post',
+                            'suppress_filters' => true
+                    ));
+                    ?>
+                    <label class="search__label">Местоположение
+                    <select name="location[]" id="location" multiple>
+                        <?php
+                        $res = array();
+                        $pr_location2 = array();
+                        foreach( $posts as $post ) {
+                            setup_postdata($post);
+                            $pr_location = get_field('property_location');
+                            array_push($pr_location2, $pr_location);
+                        }
+                        $res = array_unique($pr_location2);
+                        foreach($res as $resel) {
+                        ?>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    </label>
+                    <label class="search__label">Вид недвижимости
+                    <select name="type[]" id="type" multiple>
+                        <?php
+                            $res = array();
+                            $pr_type2 = array();
+                            foreach( $posts as $post ) {
+                                setup_postdata($post);
+                                $pr_type = get_field('property_type');
+                                array_push($pr_type2, $pr_type);
+                            }
+                            $res = array_unique($pr_type2);
+                            foreach($res as $resel) {
+                            ?>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                    </label>
+                    <label class="search__label">Количество комнат
+                    <select name="rooms-number" id="rooms-number">
+                        <option value="" selected>Любой комнатности</option>
+                        <?php
+                            $res = array();
+                            $pr_type2 = array();
+                            foreach( $posts as $post ) {
+                                setup_postdata($post);
+                                $pr_type = get_field('property_rooms');
+                                array_push($pr_type2, $pr_type);
+                            }
+                            $res = array_unique($pr_type2);
+                            foreach($res as $resel) {
+                            ?>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?>-комнатный</option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                    </label>
+                    <label class="search__label">Цена
+                        <div class="price-input">
+                            <input class="search-input" type="number" name="minprice" value="" placeholder="От">
+                            <div>-</div>
+                            <input class="search-input" type="number" name="maxprice" value="" placeholder="До">
+                            <div>&euro;</div>
+                        </div>
+                    </label>
+                    <label class="search__label">Поиск по ID номеру
+                    <select name="id" id="id">
+                        <option value="">Любой</option>
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value="<?php echo $post->ID ?>"><?php echo $post->ID ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                    </label>
+                    <label class="search__label">Год постройки
+                        <div class="price-input">
+                            <input class="search-input" type="number" name="mindate" value="" placeholder="От">
+                            <div>-</div>
+                            <input class="search-input" type="number" name="maxdate" value="" placeholder="До">
+                        </div>
+                    </label>
+                    <label class="search__label">Расстояние до моря
+                    <select name="distance-to-sea" id="distance-to-sea">
+                        <?php
+                        foreach( $posts as $post ) {
+                            setup_postdata($post)
+                            ?>
+                            <option value=""></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                    </label>
+                    <?php
+                    wp_reset_postdata();
+                ?>
+                <button class="search__btn">Поиск</button>
+                </form>
+            </div>
+        </div>
+    </section>
 <main>
     <div class="container">
         <div class="tabs__body">
@@ -17,10 +138,11 @@ Template Name: Search results
 						$minprice=$_GET['minprice'];
 						$maxprice=$_GET['maxprice'];
                         $ID=$_GET['id'];
-                        $date=$_GET['built-year'];
+                        $mindate=$_GET['mindate'];
+						$maxdate=$_GET['maxdate'];
                         $sea=$_GET['distance-to-sea'];
 
-				        if($location!="" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $date=="" && $sea=="")
+				        if($location != "" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 						$the_query = new WP_Query( array(
 						'post_type' => 'post',
@@ -28,12 +150,12 @@ Template Name: Search results
 						'meta_query'=>array(
 						     array(
 							  'key'=>'property_location',
-							  'value'=>$location,
-							  'compare'=>'LIKE'
+							  'value'=> $location,
+							  'compare'=>'IN'
 						          )
-						   )));
+							 )));
 						}
-						else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $date=="" && $sea=="")
+						else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 							$the_query = new WP_Query( array(
 							'post_type' => 'post',
@@ -47,7 +169,7 @@ Template Name: Search results
 									  )
 							   )));
 						}
-						else if($location=="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $date=="" && $sea=="")
+						else if($location=="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 							$the_query = new WP_Query( array(
 								'post_type' => 'post',
@@ -61,7 +183,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location!="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $date=="" && $sea=="")
+						else if($location!="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 							$the_query = new WP_Query( array(
 								'post_type' => 'post',
@@ -80,7 +202,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location=="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $date=="" && $sea=="")
+						else if($location=="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 							$the_query = new WP_Query( array(
 								'post_type' => 'post',
@@ -100,7 +222,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $date=="" && $sea=="")
+						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
 						{
 							$the_query = new WP_Query( array(
 								'post_type' => 'post',
@@ -119,7 +241,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-                        else if($location!="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $date=="" && $sea=="")
+                        else if($location!="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
                         {
                             $the_query = new WP_Query( array(
                                 'post_type' => 'post',
@@ -137,7 +259,7 @@ Template Name: Search results
                                 )
                             ));
                         }
-                        else if($location!="" && $type!="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $date=="" && $sea=="")
+                        else if($location!="" && $type!="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $sea=="")
                         {
                             $the_query = new WP_Query( array(
                                 'post_type' => 'post',
@@ -160,6 +282,33 @@ Template Name: Search results
                                 )
                             ));
                         }
+						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $sea=="")
+						{
+							// Todo
+							echo "TEST";
+							$the_query = new WP_Query( array(
+								'post_type' => 'post',
+								// 'paged' => $paged,
+								'meta_query'=>array(
+									 array(
+									  'key'=>'property_location',
+									  'value'=>$location,
+									  'compare'=>'LIKE'
+										  ),
+									 array(
+									  'key'=>'property_price',
+									  'type'=>'NUMERIC',
+									  'value'=>array($minprice,$maxprice),
+									  'compare'=>'BETWEEN'
+										  ),
+									 array(
+										'key'=>'property_date',
+										'type'=>'NUMERIC',
+										'value'=>array($mindate, $maxdate),
+										'compare'=>'BETWEEN'
+											)
+								   )));
+						}
                         else if($ID!="")
                         {
                             $the_query = new WP_Query( array(
@@ -169,6 +318,7 @@ Template Name: Search results
                         }
 						else
 						{
+							echo "test";
 							$the_query = new WP_Query( array(
 							'post_type' => 'post',
 							// 'paged' => $paged,
@@ -197,8 +347,9 @@ Template Name: Search results
                                  ),
                                  array(
                                     'key'=>'property_date',
-                                    'value'=>$date,
-                                    'compare'=>'LIKE'
+									'type'=>'NUMERIC',
+                                    'value'=>array($mindate, $maxdate),
+                                    'compare'=>'BETWEEN'
                                         ),
                                 array(
                                     'key'=>'property_sea',

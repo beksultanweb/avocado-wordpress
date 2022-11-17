@@ -36,9 +36,9 @@
                     <div class="interested">Интересует данный объект недвижимости?</div>
                     <div class="call-to-action">Оставьте заявку и наш менеджер свяжется с Вами</div>
                     <form action="">
-                        <input type="text" name="name" placeholder="Ваше имя">
-                        <input type="phone" name="phone" placeholder="Ваш телефон">
-                        <input type="email" name="email" placeholder="Ваш e-mail">
+                        <input class="form-input" type="text" name="name" placeholder="Ваше имя">
+                        <input class="form-input" type="phone" name="phone" placeholder="Ваш телефон">
+                        <input class="form-input" type="email" name="email" placeholder="Ваш e-mail">
                         <button class="submit">Отправить заявку</button>
                     </form>
                 </div>

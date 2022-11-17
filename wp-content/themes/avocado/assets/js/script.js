@@ -114,6 +114,3 @@ else {
         }
     }
 }
-
-new MultiSelectTag('location');
-new MultiSelectTag('type');

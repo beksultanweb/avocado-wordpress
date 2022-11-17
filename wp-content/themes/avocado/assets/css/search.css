@@ -13,9 +13,15 @@
 }
 .search__body {
     margin-top: 31px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 60px;
+}
+.price-input {
     display: flex;
-    flex-wrap: wrap;
-    gap: 29px;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
 }
 .search__label {
     display: flex;
@@ -25,23 +31,44 @@
     color: #ffffff;
 }
 .mult-select-tag .body {
+    margin-top: 12px;
     background-color: rgba(255, 255, 255, .22);
+    height: 40px;
 }
 .mult-select-tag ul li, option {
     color: #000;
 }
-select {
+.mult-select-tag .item-container {
+    background: #fff;
+    border: none;
+    color: #000;
+}
+.search-input::-webkit-outer-spin-button,
+.search-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.search-input {
+  -moz-appearance: textfield;
+  width: 150px;
+}
+select, .search-input {
     margin-top: 12px;
     background-color: rgba(255, 255, 255, .22);
-    width: 251px;
+    width: 100%;
+    height: 40px;
     color: #fff;
     border: none;
-    padding-top: 12px;
-    padding-bottom: 12px;
     padding-left: 17px;
     padding-right: 17px;
     border-radius: 10px;
     appearance: none;
+}
+.search-input {
+    margin-top: 0;
+}
+.search-input::placeholder {
+    color: #fff;
 }
 .search__btn {
     background-color: #0f100d;

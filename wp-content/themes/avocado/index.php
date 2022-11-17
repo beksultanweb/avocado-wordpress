@@ -58,8 +58,8 @@
     <section class="search">
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
-            <div class="search__body">
-                <form action="search" method="GET">
+            <div>
+                <form class="search__body" action="search" method="GET">
                 <?php
                     $posts = get_posts( array(
                             'category' => array(6, 7),
@@ -71,24 +71,38 @@
                     ));
                     ?>
                     <label class="search__label">Местоположение
-                    <select name="location" id="location" multiple>
+                    <select name="location[]" id="location" multiple>
                         <?php
+                        $res = array();
+                        $pr_location2 = array();
                         foreach( $posts as $post ) {
-                            setup_postdata($post)
-                            ?>
-                            <option value="<?php the_field('property_location'); ?>"><?php the_field('property_location'); ?></option>
-                            <?php
+                            setup_postdata($post);
+                            $pr_location = get_field('property_location');
+                            array_push($pr_location2, $pr_location);
+                        }
+                        $res = array_unique($pr_location2);
+                        foreach($res as $resel) {
+                        ?>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?></option>
+                        <?php
                         }
                         ?>
                     </select>
                     </label>
                     <label class="search__label">Вид недвижимости
-                    <select name="type" id="type" multiple>
+                    <select name="type[]" id="type" multiple>
                         <?php
-                        foreach( $posts as $post ) {
-                            setup_postdata($post)
+                            $res = array();
+                            $pr_type2 = array();
+                            foreach( $posts as $post ) {
+                                setup_postdata($post);
+                                $pr_type = get_field('property_type');
+                                array_push($pr_type2, $pr_type);
+                            }
+                            $res = array_unique($pr_type2);
+                            foreach($res as $resel) {
                             ?>
-                            <option value="<?php the_field('property_type'); ?>"><?php the_field('property_type'); ?></option>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?></option>
                             <?php
                         }
                         ?>
@@ -98,53 +112,49 @@
                     <select name="rooms-number" id="rooms-number">
                         <option value="" selected>Любой комнатности</option>
                         <?php
-                        foreach( $posts as $post ) {
-                            setup_postdata($post)
+                            $res = array();
+                            $pr_type2 = array();
+                            foreach( $posts as $post ) {
+                                setup_postdata($post);
+                                $pr_type = get_field('property_rooms');
+                                array_push($pr_type2, $pr_type);
+                            }
+                            $res = array_unique($pr_type2);
+                            foreach($res as $resel) {
                             ?>
-                            <option value="<?php the_field('property_rooms'); ?>"><?php the_field('property_rooms'); ?>-комнатный</option>
+                            <option value="<?php echo $resel; ?>"><?php echo $resel; ?>-комнатный</option>
                             <?php
                         }
                         ?>
                     </select>
                     </label>
                     <label class="search__label">Цена
-                        <?php
-                        $prices = array();
-                        foreach( $posts as $post ) {
-                            setup_postdata($post);
-                            $price = (int)get_field('property_price');
-                            // $exp_price = explode(' ', $price).join();
-                            if(isset($price) && !empty($price)){
-                                $prices[] = $price;
-                            }
-                        }
-                        ?>
-                        <input type="number" name="minprice" value="<?php echo min($prices); ?>">
-                        <input type="number" name="maxprice" value="<?php echo max($prices); ?>">
+                        <div class="price-input">
+                            <input class="search-input" type="number" name="minprice" value="" placeholder="От">
+                            <div>-</div>
+                            <input class="search-input" type="number" name="maxprice" value="" placeholder="До">
+                            <div>&euro;</div>
+                        </div>
                     </label>
                     <label class="search__label">Поиск по ID номеру
                     <select name="id" id="id">
+                        <option value="">Любой</option>
                         <?php
                         foreach( $posts as $post ) {
                             setup_postdata($post)
                             ?>
-                            <option value=""><?php echo $post->ID ?></option>
+                            <option value="<?php echo $post->ID ?>"><?php echo $post->ID ?></option>
                             <?php
                         }
                         ?>
                     </select>
                     </label>
                     <label class="search__label">Год постройки
-                    <select name="built-year" id="built-year">
-                        <?php
-                        foreach( $posts as $post ) {
-                            setup_postdata($post)
-                            ?>
-                            <option value=""><?php the_field('property_date'); ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
+                        <div class="price-input">
+                            <input class="search-input" type="number" name="mindate" value="" placeholder="От">
+                            <div>-</div>
+                            <input class="search-input" type="number" name="maxdate" value="" placeholder="До">
+                        </div>
                     </label>
                     <label class="search__label">Расстояние до моря
                     <select name="distance-to-sea" id="distance-to-sea">
