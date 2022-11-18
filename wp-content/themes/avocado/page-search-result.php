@@ -8,19 +8,18 @@ Template Name: Search results
     $location=$_GET['location'];
     $type=$_GET['type'];
     $rooms=$_GET['rooms-number'];
-    $minprice=$_GET['minprice'];
-    $maxprice=$_GET['maxprice'];
+    $minprice=intval(str_replace(' ', '', $_GET['minprice']));
+    $maxprice=intval(str_replace(' ', '', $_GET['maxprice']));
     $ID=$_GET['id'];
     $mindate=$_GET['mindate'];
     $maxdate=$_GET['maxdate'];
-    $minsea=$_GET['minsea'];
     $maxsea=$_GET['maxsea'];
 ?>
 <section class="search">
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
             <div>
-                <form class="search__body" action="<?php get_permalink('search') ?>" method="GET">
+                <form class="search__body" action="<?php get_permalink('search') ?>" onsubmit="return validateForm()" method="GET">
                 <?php
                     $posts = get_posts( array(
                             'category' => array(6, 7),
@@ -128,12 +127,12 @@ Template Name: Search results
                     </label>
                     <label class="search__label">Цена
                         <div class="price-input">
-                            <input class="search-input" type="number" name="minprice" value="<?php
-                            if($minprice != "") echo $minprice;
+                            <input class="search-input" type="text" name="minprice" id="price" value="<?php
+                            if($minprice != "") echo number_format($minprice, 0, ',', ' ');
                             ?>" placeholder="От">
                             <div>-</div>
-                            <input class="search-input" type="number" name="maxprice" value="<?php
-                            if($maxprice != "") echo $maxprice;
+                            <input class="search-input" type="text" name="maxprice" id="price" value="<?php
+                            if($maxprice != "") echo number_format($maxprice, 0, ',', ' ');
                             ?>" placeholder="До">
                             <div>&euro;</div>
                         </div>
@@ -162,22 +161,18 @@ Template Name: Search results
                     </label>
                     <label class="search__label">Год постройки
                         <div class="price-input">
-                            <input class="search-input" type="number" name="mindate" value="<?php
+                            <input class="search-input" type="number" name="mindate" id="date" value="<?php
                             if($mindate != "") echo $mindate;
                             ?>" placeholder="От">
                             <div>-</div>
-                            <input class="search-input" type="number" name="maxdate" value="<?php
+                            <input class="search-input" type="number" name="maxdate" id="date" value="<?php
                             if($maxdate != "") echo $maxdate;
                             ?>" placeholder="До">
                         </div>
                     </label>
                     <label class="search__label">Расстояние до моря
                         <div class="price-input">
-                            <input class="search-input" type="number" name="minsea" value="<?php
-                            if($minsea != "") echo $minsea;
-                            ?>" placeholder="От">
-                            <div>-</div>
-                            <input class="search-input" type="number" name="maxsea" value="<?php
+                            <input class="search-input" type="number" name="maxsea" id="sea" value="<?php
                             if($maxsea != "") echo $maxsea;
                             ?>" placeholder="До">
                             <div>м.</div>
@@ -206,7 +201,7 @@ Template Name: Search results
                                 'p' => $ID
                             ));
                         }
-				        else if($location != "" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+				        else if($location != "" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 						$the_query = new WP_Query( array(
 						'posts_per_page' => 6,
@@ -220,7 +215,7 @@ Template Name: Search results
 						          )
 							 )));
 						}
-						else if($location=="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location=="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
                                 'posts_per_page' => 6,
@@ -235,7 +230,7 @@ Template Name: Search results
                                 )
                             ));
 						}
-						else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -250,7 +245,7 @@ Template Name: Search results
 									  )
 							   )));
 						}
-						else if($location=="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location=="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -265,7 +260,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location!="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location!="" && $type=="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -285,7 +280,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location=="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location=="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -306,7 +301,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -326,7 +321,7 @@ Template Name: Search results
 										  )
 								   )));
 						}
-                        else if($location!="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+                        else if($location!="" && $type!="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
                         {
                             $the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -346,7 +341,7 @@ Template Name: Search results
                                 )
                             ));
                         }
-                        else if($location!="" && $type!="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $minsea=="" && $maxsea=="")
+                        else if($location!="" && $type!="" && $rooms!="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea=="")
                         {
                             $the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -371,7 +366,7 @@ Template Name: Search results
                                 )
                             ));
                         }
-						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea=="" && $maxsea=="")
+						else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea=="")
 						{
 							$the_query = new WP_Query( array(
 								'posts_per_page' => 6,
@@ -397,7 +392,28 @@ Template Name: Search results
 											)
 								   )));
 						}
-						else if($location!="" && $type!="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea=="")
+						{
+							$the_query = new WP_Query( array(
+								'posts_per_page' => 6,
+								'paged' => $current_page,
+								'post_type' => 'post',
+								'meta_query'=>array(
+									 array(
+									  'key'=>'property_price',
+									  'type'=>'NUMERIC',
+									  'value'=>array($minprice,$maxprice),
+									  'compare'=>'BETWEEN'
+										  ),
+									 array(
+										'key'=>'property_date',
+										'type'=>'NUMERIC',
+										'value'=>array($mindate, $maxdate),
+										'compare'=>'BETWEEN'
+											)
+								   )));
+						}
+						else if($location!="" && $type!="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -435,12 +451,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
+                                    'value'=>$maxsea,
                                     'compare'=>'BETWEEN'
                                         ),
 							   )));
 						}
-                        else if($location!="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location!="" && $type=="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -473,12 +489,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                         ),
 							   )));
 						}
-                        else if($location=="" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location=="" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -494,12 +510,42 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
+                                    ),
+							   )));
+                        }
+                        else if($location=="" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea=="")
+						{
+							$the_query = new WP_Query( array(
+							'posts_per_page' => 6,
+							'paged' => $current_page,
+							'post_type' => 'post',
+							'meta_query'=>array(
+                                array(
+                                    'key'=>'property_date',
+                                    'type'=>'NUMERIC',
+                                    'value'=>array($mindate, $maxdate),
                                     'compare'=>'BETWEEN'
                                     ),
 							   )));
                         }
-                        else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location=="" && $type=="" && $rooms=="" && $minprice=="" && $maxprice=="" && $ID=="" && $mindate=="" && $maxdate=="" && $maxsea!="")
+						{
+							$the_query = new WP_Query( array(
+							'posts_per_page' => 6,
+							'paged' => $current_page,
+							'post_type' => 'post',
+							'meta_query'=>array(
+                                array(
+                                    'key'=>'property_sea',
+                                    'type'=>'NUMERIC',
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
+                                    ),
+							   )));
+                        }
+                        else if($location=="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -521,12 +567,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                     ),
 							   )));
                         }
-                        else if($location=="" && $type!="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location=="" && $type!="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -553,12 +599,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                     ),
 							   )));
                         }
-                        else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location!="" && $type=="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -585,12 +631,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                     ),
 							   )));
                         }
-                        else if($location!="" && $type!="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location!="" && $type!="" && $rooms=="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -622,12 +668,12 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                     ),
 							   )));
                         }
-                        else if($location=="" && $type!="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $minsea!="" && $maxsea!="")
+                        else if($location=="" && $type!="" && $rooms!="" && $minprice!="" && $maxprice!="" && $ID=="" && $mindate!="" && $maxdate!="" && $maxsea!="")
 						{
 							$the_query = new WP_Query( array(
 							'posts_per_page' => 6,
@@ -659,8 +705,8 @@ Template Name: Search results
                                 array(
                                     'key'=>'property_sea',
                                     'type'=>'NUMERIC',
-                                    'value'=>array($minsea, $maxsea),
-                                    'compare'=>'BETWEEN'
+                                    'value'=>$maxsea,
+                                    'compare'=>'<='
                                     ),
 							   )));
                         }

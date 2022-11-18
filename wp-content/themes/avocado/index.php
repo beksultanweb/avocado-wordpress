@@ -58,7 +58,7 @@
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
             <div>
-                <form class="search__body" action="search" method="GET">
+                <form class="search__body" action="search" onsubmit="return validateForm()" method="GET">
                 <?php
                     $posts = get_posts( array(
                             'category' => array(6, 7),
@@ -166,12 +166,12 @@
                     </label>
                     <label class="search__label">Цена
                         <div class="price-input">
-                            <input class="search-input" type="number" name="minprice" value="<?php
-                            if($minprice != "") echo $minprice;
+                            <input class="search-input" type="text" name="minprice" id="price" value="<?php
+                            if($minprice != "") echo number_format($minprice, 0, ',', ' ');
                             ?>" placeholder="От">
                             <div>-</div>
-                            <input class="search-input" type="number" name="maxprice" value="<?php
-                            if($maxprice != "") echo $maxprice;
+                            <input class="search-input" type="text" name="maxprice" id="price" value="<?php
+                            if($maxprice != "") echo number_format($maxprice, 0, ',', ' ');
                             ?>" placeholder="До">
                             <div>&euro;</div>
                         </div>
@@ -200,22 +200,18 @@
                     </label>
                     <label class="search__label">Год постройки
                         <div class="price-input">
-                            <input class="search-input" type="number" name="mindate" value="<?php
+                            <input class="search-input" type="number" name="mindate" id="date" value="<?php
                             if($mindate != "") echo $mindate;
                             ?>" placeholder="От">
                             <div>-</div>
-                            <input class="search-input" type="number" name="maxdate" value="<?php
+                            <input class="search-input" type="number" name="maxdate" id="date" value="<?php
                             if($maxdate != "") echo $maxdate;
                             ?>" placeholder="До">
                         </div>
                     </label>
                     <label class="search__label">Расстояние до моря
                         <div class="price-input">
-                            <input class="search-input" type="number" name="minsea" value="<?php
-                            if($minsea != "") echo $minsea;
-                            ?>" placeholder="От">
-                            <div>-</div>
-                            <input class="search-input" type="number" name="maxsea" value="<?php
+                            <input class="search-input" type="number" name="maxsea" id="sea" value="<?php
                             if($maxsea != "") echo $maxsea;
                             ?>" placeholder="До">
                             <div>м.</div>
