@@ -48,9 +48,9 @@
                     <li class="menu__item">Контакты</li>
                 </ul>
                 <div class="burger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span class="burger-span"></span>
+                    <span class="burger-span"></span>
+                    <span class="burger-span"></span>
                 </div>
             </nav>
         </div>

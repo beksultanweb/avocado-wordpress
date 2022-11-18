@@ -2,7 +2,6 @@
     margin-top: 40px;
     background-color: #82b723;
     padding-top: 48px;
-    padding-left: 42px;
     padding-bottom: 47px;
 }
 .title {
@@ -33,7 +32,6 @@
 .mult-select-tag .body {
     margin-top: 12px;
     background-color: rgba(255, 255, 255, .22);
-    height: 40px;
 }
 .mult-select-tag ul li, option {
     color: #000;
@@ -78,4 +76,16 @@ select, .search-input {
     font-weight: 300;
     padding: 15px 86px 15px 86px;
     align-self: flex-end;
+}
+
+@media (max-width: 1000px) {
+    .search__body {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .search__body {
+        grid-template-columns: 1fr;
+    }
 }

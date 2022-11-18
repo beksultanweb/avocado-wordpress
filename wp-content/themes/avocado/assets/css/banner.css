@@ -17,11 +17,6 @@
     position: relative;
     height: 500px;
     border-radius: 20px;
-    filter: brightness(87%);
-}
-.banner-img {
-    object-fit: cover;
-    height: 100%;
 }
 .banner__content {
     position: relative;

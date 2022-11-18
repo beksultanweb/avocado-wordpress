@@ -117,12 +117,12 @@
 }
 
 @media (max-width: 1000px) {
+    .result__block,
     .btn-1:checked ~ .tabs__body .tabs__block:nth-child(1),
     .btn-2:checked ~ .tabs__body .tabs__block:nth-child(2){
         grid-template-columns: repeat(2, 1fr);
     }
 }
-
 @media (max-width: 740px) {
     .btn {
         font-size: 20px;
@@ -130,6 +130,7 @@
     .see_more {
         width: 100%;
     }
+    .result__block,
     .btn-1:checked ~ .tabs__body .tabs__block:nth-child(1),
     .btn-2:checked ~ .tabs__body .tabs__block:nth-child(2){
         grid-template-columns: 1fr;
