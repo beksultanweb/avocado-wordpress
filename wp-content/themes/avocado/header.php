@@ -23,7 +23,7 @@
                         <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_2', 2) ?></div></div>
                     </div>
                     <button class="whatsapp">Написать в WhatsApp</button>
-                    <button class="back-call">Обратный звонок</button>
+                    <button class="back-call popup-link">Обратный звонок</button>
                 </div>
             </nav>
         </div>

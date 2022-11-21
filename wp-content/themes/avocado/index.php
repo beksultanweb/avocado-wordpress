@@ -381,6 +381,17 @@
             </div>
         </div>
     </section>
+    <section class="search">
+        <div class="container">
+            <h2 class="title">Команда</h2>
+            <div class="team">
+                <div class="team__item"><img src="<?php echo bloginfo('template_url'); ?>/assets/images/banner.jpg" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
+            </div>
+        </div>
+    </section>
     <?php
         get_footer();
     ?>

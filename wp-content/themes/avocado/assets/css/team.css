@@ -1,0 +1,36 @@
+.team {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.team__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.team__img {
+    border-radius: 50%;
+    width: 182px;
+    height: 182px;
+}
+.team__name {
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+    margin-top: 26px;
+}
+.team__pos {
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    margin-top: 10px;
+}
+.team__btn {
+    border-radius: 10px;
+    border: solid 1px #fff;
+    background: inherit;
+    color: #fff;
+    width: 166px;
+    height: 37px;
+    margin-top: 28px;
+}

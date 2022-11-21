@@ -26,6 +26,7 @@ function avocado_scripts() {
     }
     wp_enqueue_style('avocado-style', get_stylesheet_uri());
     wp_enqueue_script('avocado-scripts2', get_template_directory_uri() . '/assets/js/burger.js', array(), null, true);
+    wp_enqueue_script('modal', get_template_directory_uri() . '/assets/js/popup.js', array(), null, true);
 }
 
 add_theme_support('custom-logo');

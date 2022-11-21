@@ -8,8 +8,14 @@ Template Name: Search results
     $location=$_GET['location'];
     $type=$_GET['type'];
     $rooms=$_GET['rooms-number'];
-    $minprice=intval(str_replace(' ', '', $_GET['minprice']));
-    $maxprice=intval(str_replace(' ', '', $_GET['maxprice']));
+    $minprice=$_GET['minprice'];
+    $maxprice=$_GET['maxprice'];
+    if($minprice != "") {
+        $minprice=(int)str_replace(' ', '', $_GET['minprice']);
+    }
+    if($maxprice != "") {
+        $maxprice=(int)str_replace(' ', '', $_GET['maxprice']);
+    }
     $ID=$_GET['id'];
     $mindate=$_GET['mindate'];
     $maxdate=$_GET['maxdate'];

@@ -18,11 +18,6 @@ distances.forEach(el => el.oninput = function () {
 // Price
 var prices = document.querySelectorAll('#price');
 prices.forEach(el => el.oninput = function () {
-    // for(let i = 0; i < this.value.length; i++){
-    //     if(this.value.length === 4 || this.value.length === 7 || this.value.length === 10) {
-    //         console.log(this.value[i]);
-    //     }
-    // }
     this.value = this.value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 })
 
