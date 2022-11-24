@@ -317,7 +317,7 @@
             <div class="about__content">
                 <div>
                     <h2 class="about__title"><?php the_field('about_title'); ?></h2>
-                    <p><?php the_field('about_description'); ?></p>
+                    <p class="about__p"><?php the_field('about_description'); ?></p>
                 </div>
                 <div>
                     <img class="tabs__img" src="<?php the_field('about_img'); ?>" alt="about">
@@ -327,10 +327,31 @@
     </section>
     <section class="videos">
         <div class="container">
-            <div class="videos__content">
-                <div><iframe width="100%" height="200" src="https://www.youtube.com/embed/A0mJ9JL6PaI?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                <div><iframe width="100%" height="200" src="https://www.youtube.com/embed/A0mJ9JL6PaI?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                <div><iframe width="100%" height="200" src="https://www.youtube.com/embed/A0mJ9JL6PaI?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="videos-wrapper">
+                <div class="videos-line">
+                <?php
+                    $posts = get_posts( array(
+                        'numberposts' => -1,
+                        'category_name' => 'videos',
+                        'orderBy' => 'date',
+                        'order' => 'ASC',
+                        'post_type' => 'post',
+                        'suppress_filters' => true,
+                    ));
+                    foreach( $posts as $post ) {
+                        setup_postdata($post)
+                        ?>
+                            <?php the_field('youtube_links'); ?>
+                        <?php
+                    }
+                    wp_reset_postdata();
+                ?>
+                </div>
+            </div>
+            <div class="videos-dots-wrapper">
+            </div>
+            <div class="swipe-hint swipe-horizontal">
+                <img src="<?php echo bloginfo('template_url'); ?>/assets/icons/finger.svg" alt="finger">
             </div>
         </div>
     </section>
@@ -373,22 +394,46 @@
     </section>
     <section class="articles">
         <div class="container">
-            <h2 class="about__title">Полезная информация о недвижимости в Турции</h2>
+            <h2 class="article__h2">Полезная информация о недвижимости в Турции</h2>
             <div class="articles__content">
-                <div><img class="articles__img" src="<?php echo bloginfo('template_url'); ?>/assets/images/banner.jpg" alt="article"><div class="article__title">7 советов как правильно выбрать недвижимость в Алании</div></div>
-                <div><img class="articles__img" src="<?php echo bloginfo('template_url'); ?>/assets/images/banner.jpg" alt="article"><div class="article__title">Какие документы нужны для покупки жилья в Турции</div></div>
-                <div><img class="articles__img" src="<?php echo bloginfo('template_url'); ?>/assets/images/banner.jpg" alt="article"><div class="article__title">Тренды в дизайне интерьеров в 2022-2023</div></div>
+                <?php
+                $posts = new WP_Query( array(
+                    'posts_per_page' => 3,
+                    'category_name' => 'stati',
+                    'orderBy' => 'date',
+                    'order' => 'ASC',
+                    'post_type' => 'post',
+                    'suppress_filters' => true,
+                ));
+                while( $posts->have_posts() ) : $posts->the_post();
+                ?>
+                <div class="article">
+                    <img class="articles__img" src="<?php the_field('article_img'); ?>" alt="article">
+                    <div class="article__title"><?php the_title(); ?></div>
+                    <p class="article__text">
+                    <?php
+                    $string = (string)get_field('article_text');
+                    echo internoetics_truncate_words($string, 20);
+                    ?>
+                    </p>
+                    <a href="">Читать дальше...</a>
+                </div>
+                <?php
+                endwhile;
+                wp_reset_postdata();
+                ?>
             </div>
+            <a href="<?php echo get_permalink(252); ?>"><button class="see_more">Посмотреть еще</button></a>
         </div>
     </section>
     <section class="search">
         <div class="container">
-            <h2 class="title">Команда</h2>
+            <h2 class="team__title">Команда</h2>
             <div class="team">
-                <div class="team__item"><img src="<?php echo bloginfo('template_url'); ?>/assets/images/banner.jpg" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
-                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
-                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
-                <div class="team__item"><img src="" alt="team__img" class="team__img"><div class="team__name">Имя Фамилия</div><div class="team__pos">должность</div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="<?php the_field('team_img'); ?>" alt="team__img" class="team__img"><div class="team__name"><?php the_field('team_name'); ?></div><div class="team__pos"><?php the_field('team_pos'); ?></div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="<?php the_field('team_img2'); ?>" alt="team__img" class="team__img"><div class="team__name"><?php the_field('team_name2'); ?></div><div class="team__pos"><?php the_field('team_pos2'); ?></div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="<?php the_field('team_img3'); ?>" alt="team__img" class="team__img"><div class="team__name"><?php the_field('team_name3'); ?></div><div class="team__pos"><?php the_field('team_pos3'); ?></div><button class="team__btn popup-link">Консультация</button></div>
+                <div class="team__item"><img src="<?php the_field('team_img4'); ?>" alt="team__img" class="team__img"><div class="team__name"><?php the_field('team_name4'); ?></div><div class="team__pos"><?php the_field('team_pos4'); ?></div><button class="team__btn popup-link">Консультация</button></div>
             </div>
         </div>
     </section>

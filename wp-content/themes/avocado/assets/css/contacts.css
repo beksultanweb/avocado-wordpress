@@ -1,0 +1,19 @@
+.contacts__item {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.contacts__body {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 30px;
+}
+.contacts {
+    margin-bottom: 50px;
+}
+@media (max-width: 1000px) {
+    .contacts__body {
+        display: flex;
+        flex-direction: column;
+    }
+}

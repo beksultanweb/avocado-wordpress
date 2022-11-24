@@ -35,12 +35,7 @@
                 <div class="form">
                     <div class="interested">Интересует данный объект недвижимости?</div>
                     <div class="call-to-action">Оставьте заявку и наш менеджер свяжется с Вами</div>
-                    <form action="">
-                        <input class="form-input" type="text" name="name" placeholder="Ваше имя">
-                        <input class="form-input" type="phone" name="phone" placeholder="Ваш телефон">
-                        <input class="form-input" type="email" name="email" placeholder="Ваш e-mail">
-                        <button class="submit">Отправить заявку</button>
-                    </form>
+                    <?php echo do_shortcode('[contact-form-7 id="183" title="Форма обратной связи"]'); ?>
                 </div>
             </div>
         </div>
@@ -94,7 +89,7 @@
                     <div class="property-info__text">
                         <?php the_field('property_description'); ?>
                     </div>
-                    <button class="property-info__btn">Перезвоните мне</button>
+                    <button class="property-info__btn popup-link">Перезвоните мне</button>
                 </div>
             </div>
         </div>

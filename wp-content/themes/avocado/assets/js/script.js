@@ -50,7 +50,6 @@ dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         console.log("test");
         position = widthBox * index
-        // sliderLine.style.left = -position + 'px'
         carousel.scroll(position, 0);
         dotIndex = index
         thisSlide(dotIndex)
@@ -69,7 +68,6 @@ const testimonalLine = document.querySelector('.testimonal-line'),
       testimonals = document.querySelectorAll('.testimonal').length / 3,
       testimonalCarousel = document.getElementsByClassName('testimonals-wrapper')[0]
 
-console.log(testimonals);
 for(let i = 0; i<testimonals; i++) {
     let dot = document.createElement('div');
     dot.className = "testimonal-dot";
@@ -80,7 +78,7 @@ let testimonalPosition = 0,
     testimonalDotIndex = 0,
     testimonalWidthBox = parseInt(document.getElementsByClassName('testimonals-wrapper')[0].offsetWidth)
 
-const gap = 10;
+// const gap = 10;
 
 const testimonalThisSlide = (index) => {
     for(let dot of testimonalDots) {
@@ -114,3 +112,39 @@ else {
         }
     }
 }
+
+// Videos slider
+const videosLine = document.querySelector('.videos-line'),
+      videosDotsWrapper = document.querySelector('.videos-dots-wrapper'),
+      videos = document.querySelectorAll('iframe').length / 3,
+      videosCarousel = document.getElementsByClassName('videos-wrapper')[0]
+
+for(let i = 0; i<videos; i++) {
+    let dot = document.createElement('div');
+    dot.className = "videos-dot";
+    videosDotsWrapper.appendChild(dot);
+}
+
+let videosPosition = 0,
+    videosDotIndex = 0,
+    videosWidthBox = parseInt(document.getElementsByClassName('videos-wrapper')[0].offsetWidth)
+
+// const videosGap = 0;
+
+const videosThisSlide = (index) => {
+    for(let dot of videosDots) {
+        dot.classList.remove('dot_active')
+    }
+    videosDots[index].classList.add('dot_active')
+}
+
+videosDots = document.querySelectorAll('.videos-dot');
+
+videosDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        videosPosition = videosWidthBox * index
+        videosCarousel.scroll(videosPosition, 0);
+        videosDotIndex = index
+        videosThisSlide(videosDotIndex)
+    })
+})

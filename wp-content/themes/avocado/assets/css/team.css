@@ -2,28 +2,33 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: 30px;
 }
 .team__item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 250px;
 }
 .team__img {
     border-radius: 50%;
     width: 182px;
     height: 182px;
+    object-fit: cover;
 }
 .team__name {
     font-size: 22px;
     font-weight: 500;
     color: #fff;
     margin-top: 26px;
+    text-align: center;
 }
 .team__pos {
     font-size: 18px;
     font-weight: 300;
     color: #fff;
     margin-top: 10px;
+    text-align: center;
 }
 .team__btn {
     border-radius: 10px;
@@ -33,4 +38,18 @@
     width: 166px;
     height: 37px;
     margin-top: 28px;
+}
+.team__title {
+    font-size: 30px;
+    color: #fff;
+    font-weight: 600;
+}
+
+@media(max-width: 640px) {
+    .team {
+        justify-content: center;
+    }
+    .team__title {
+        text-align: center;
+    }
 }

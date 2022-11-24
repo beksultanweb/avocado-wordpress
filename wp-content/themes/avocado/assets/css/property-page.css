@@ -63,10 +63,12 @@
     border-radius: 20px;
     padding: 47px 31px 42px 38px;
 }
-form {
+form > p {
     display: flex;
-    gap: 18px;
     flex-direction: column;
+}
+.wpcf7-not-valid-tip {
+    margin-top: 10px;
 }
 .property-slider {
     overflow: auto;

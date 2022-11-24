@@ -10,6 +10,7 @@ if(popupLinks.length > 0) {
             popup.addEventListener('click', function(e) {
                 if(!e.target.closest('.modal__form')) {
                     popup.classList.remove('open')
+                    document.body.classList.remove('lock')
                 }
             })
             document.body.classList.add('lock')

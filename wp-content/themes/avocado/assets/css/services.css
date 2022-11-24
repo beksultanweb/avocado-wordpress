@@ -1,0 +1,23 @@
+.service {
+    background-color: #f2f8e9;
+    padding: 29px 30px 41px 25px;
+    border-radius: 15px;
+    flex: 30%;
+}
+.service__btn {
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 300;
+    background-color: #82b723;
+    width: 248px;
+    height: 52px;
+}
+.services__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.services {
+    margin-bottom: 50px;
+}

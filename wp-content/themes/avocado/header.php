@@ -22,7 +22,7 @@
                         <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_1', 2) ?></div></div>
                         <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_2', 2) ?></div></div>
                     </div>
-                    <button class="whatsapp">Написать в WhatsApp</button>
+                    <a href="https://wa.me/<?php the_field('phone_1', 2); ?>"><button class="whatsapp">Написать в WhatsApp</button></a>
                     <button class="back-call popup-link">Обратный звонок</button>
                 </div>
             </nav>
@@ -40,12 +40,12 @@
                     </a>
                 </div>
                 <ul class="menu">
-                    <li class="menu__item">Главная</li>
-                    <li class="menu__item">Недвижимость</li>
-                    <li class="menu__item">О компании</li>
-                    <li class="menu__item">Услуги</li>
-                    <li class="menu__item">Отзывы</li>
-                    <li class="menu__item">Контакты</li>
+                    <a href="<?php echo get_home_url(); ?>"><li class="menu__item">Главная</li></a>
+                    <a href="<?php echo get_permalink(92); ?>"><li class="menu__item">Недвижимость</li></a>
+                    <a href="<?php echo get_permalink(171); ?>"><li class="menu__item">О компании</li></a>
+                    <a href="<?php echo get_permalink(216); ?>"><li class="menu__item">Услуги</li></a>
+                    <a href="<?php echo get_permalink(169); ?>"><li class="menu__item">Отзывы</li></a>
+                    <a href="<?php echo get_permalink(234); ?>"><li class="menu__item">Контакты</li></a>
                 </ul>
                 <div class="burger">
                     <span class="burger-span"></span>

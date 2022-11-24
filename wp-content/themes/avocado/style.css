@@ -11,6 +11,9 @@
 @import "./assets/css/team.css";
 @import "./assets/css/footer.css";
 @import "./assets/css/modal.css";
+@import "./assets/css/finger.css";
+@import "./assets/css/services.css";
+@import "./assets/css/contacts.css";
 
 /* property page */
 @import "./assets/css/property-page.css";
@@ -25,6 +28,9 @@
 }
 a {
     text-decoration: none;
+}
+button {
+    cursor: pointer;
 }
 
 @media (max-width: 1140px) {

@@ -8,11 +8,14 @@
     gap: 37px
 }
 .about__title {
+    margin-top: 0;
+    margin-bottom: 10px;
     font-size: 30px;
     font-weight: 600;
     color: #000000;
 }
-p {
+.about__p {
+    margin: 0;
     font-size: 18px;
     font-weight: 300;
     color: #000000;

@@ -20,6 +20,11 @@
     justify-content: center;
     gap: 12px;
 }
+.testimonals__block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 .testimonal-dot {
     width: 18px;
     height: 18px;
@@ -55,6 +60,7 @@
     color: #000000;
 }
 .testimonal__text {
+    margin-top: 15px;
     font-size: 16px;
     font-weight: 300;
     color: #000000;
@@ -87,6 +93,9 @@
 @media (max-width: 640px) {
     .testimonal__h2 {
         text-align: center;
+    }
+    .testimonals__block {
+        justify-content: center;
     }
     .testimonal-line {
         display: flex;
