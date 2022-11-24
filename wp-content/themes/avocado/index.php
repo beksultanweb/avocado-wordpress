@@ -416,7 +416,7 @@
                     echo internoetics_truncate_words($string, 20);
                     ?>
                     </p>
-                    <a href="">Читать дальше...</a>
+                    <a href="<?php echo get_permalink(); ?>">Читать дальше...</a>
                 </div>
                 <?php
                 endwhile;

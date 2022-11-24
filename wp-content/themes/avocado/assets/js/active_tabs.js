@@ -1,14 +1,4 @@
-const btnmore = document.querySelector('.see_more')
 window.addEventListener('DOMContentLoaded', () => {
-    const loading = document.createElement('div')
-    loading.className = 'loader'
-    if(btnmore) btnmore.style.display = "none"
-    document.querySelector('.tabs__body').appendChild(loading)
-})
-
-window.addEventListener('load', () => {
-    if(btnmore) btnmore.style.display = "block"
-    document.querySelector('.loader').style.display = 'none'
     const storage = localStorage.getItem('active_tabs')
     if(storage) {
         document.querySelector(`#${storage}`).checked = true
