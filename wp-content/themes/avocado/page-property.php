@@ -6,14 +6,17 @@ Template Name: Список недвижимости
 <?php
     get_header();
 ?>
-    <section class="search">
+    <section class="search search_page">
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
             <div>
-                <form class="search__body" action="search" onsubmit="return validateForm()" method="GET">
+                <form action="search" onsubmit="return validateForm()" method="GET">
+                <div class="search__body">
                 <?php
+                    $sale_id = get_cat_ID('На продажу');
+                    $rent_id = get_cat_ID('В аренду');
                     $posts = get_posts( array(
-                            'category' => array(6, 7),
+                            'category' => array($sale_id, $rent_id),
                             'numberposts' => -1,
                             'orderby' => 'date',
                             'order' => 'DESC',
@@ -21,6 +24,25 @@ Template Name: Список недвижимости
                             'suppress_filters' => true
                     ));
                     ?>
+                    <label class="search__label">Искать среди
+                        <div class="price-input">
+                            <label for="category">На продажу</label><input type="radio" checked name="category" id="category" value="for-sale">
+                            <label for="category">В аренду</label><input type="radio" name="category" id="category" value="for-rent">
+                        </div>
+                    </label>
+                    <label class="search__label">Город
+                    <select name="city" id="city">
+                        <option value="" selected>Любой город</option>
+                        <?php
+                            $cities = get_categories(array('parent' => 15));
+                            foreach($cities as $cit) {
+                            ?>
+                            <option value="<?php echo $cit -> name; ?>"><?php echo $cit -> name; ?></option>
+                            <?php
+                            }
+                        ?>
+                    </select>
+                    </label>
                     <label class="search__label">Местоположение
                     <select name="location[]" id="location" multiple>
                         <?php foreach($location as $val) {
@@ -172,6 +194,7 @@ Template Name: Список недвижимости
                     <?php
                     wp_reset_postdata();
                 ?>
+                </div>
                 <button class="search__btn">Поиск</button>
                 </form>
             </div>
@@ -181,43 +204,56 @@ Template Name: Список недвижимости
         <div class="container">
             <div class="active__tabs">
                 <input type="radio" name="active__tabs" id="btn-1" class="btn-1" checked>
-                <label for="btn-1" class="btn">Горячие предложения</label>
+                <label for="btn-1" class="btn">Продажа</label>
                 <input type="radio" name="active__tabs" id="btn-2" class="btn-2">
-                <label for="btn-2" class="btn">Новые объекты</label>
+                <label for="btn-2" class="btn">Аренда</label>
                 <div class="tabs__body">
                     <div class="tabs__block">
                         <?php
-                            $current_page = !empty( $_GET['hot-deals'] ) ? $_GET['hot-deals'] : 1;
+                            $current_page = !empty( $_GET['for-sale'] ) ? $_GET['for-sale'] : 1;
 
                             $query = new WP_Query( array(
                                 'posts_per_page' => 6,
                                 'paged' => $current_page,
-                                'category_name' => 'hot_deals',
+                                'category_name' => 'for-sale',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
                                 'post_type' => 'post',
                                 'suppress_filters' => true,
                             ));
                             while( $query->have_posts() ) : $query->the_post();
+                            $city = get_the_category(get_the_ID());
                                 ?>
                                     <div class="tabs__item">
                                         <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
+                                        <div class="tabs__sub">
+                                            <div class="tabs__city"><?php echo $city[0] -> name; ?></div>
+                                            <div class="tabs__ID"><?php the_field('property_ID') ?></div>
+                                        </div>
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/flat.svg" alt="building">
                                                 <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/meters.svg" alt="square">
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                        <div class="tabs__price">
                                             <?php
                                                 $price = get_field('property_price');
                                                 echo number_format($price, 0, ',', ' ');
-                                            ?> EUR</button></a>
+                                            ?> EUR</div>
+                                        <div class="tabs__btns">
+                                            <a href="<?php echo get_permalink(); ?>">
+                                                <button class="tabs__btn">
+                                                    Подробнее
+                                                </button>
+                                            </a>
+                                            <?php echo do_shortcode('[favorite_button]') ?>
+                                        </div>
                                     </div>
                                 <?php
                             endwhile;
@@ -226,7 +262,7 @@ Template Name: Список недвижимости
                                 <?php
                                 echo paginate_links( array(
                                     'base' => get_permalink(92) . '%_%',
-                                    'format' => '?hot-deals=%#%',
+                                    'format' => '?for-sale=%#%',
                                     'total' => $query->max_num_pages,
                                     'current' => $current_page,
                                 ) );
@@ -238,37 +274,50 @@ Template Name: Список недвижимости
                     </div>
                     <div class="tabs__block">
                         <?php
-                            $current_page = !empty( $_GET['new-objects'] ) ? $_GET['new-objects'] : 1;
+                            $current_page = !empty( $_GET['for-rent'] ) ? $_GET['for-rent'] : 1;
 
                             $query = new WP_Query( array(
                                 'posts_per_page' => 6,
                                 'paged' => $current_page,
-                                'category_name' => 'new_objects',
+                                'category_name' => 'for-rent',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
                                 'post_type' => 'post',
                                 'suppress_filters' => true,
                             ));
                             while( $query->have_posts() ) : $query->the_post();
+                            $city = get_the_category(get_the_ID());
                                 ?>
                                     <div class="tabs__item">
                                         <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
+                                        <div class="tabs__sub">
+                                            <div class="tabs__city"><?php echo $city[0] -> name; ?></div>
+                                            <div class="tabs__ID"><?php the_field('property_ID') ?></div>
+                                        </div>
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/flat.svg" alt="building">
                                                 <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/meters.svg" alt="square">
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?></div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                        <div class="tabs__price">
                                             <?php
-                                            $price = get_field('property_price');
-                                            echo number_format($price, 0, ',', ' ');
-                                            ?> EUR</button></a>
+                                                $price = get_field('property_price');
+                                                echo number_format($price, 0, ',', ' ');
+                                            ?> EUR</div>
+                                        <div class="tabs__btns">
+                                            <a href="<?php echo get_permalink(); ?>">
+                                                <button class="tabs__btn">
+                                                    Подробнее
+                                                </button>
+                                            </a>
+                                            <?php echo do_shortcode('[favorite_button]') ?>
+                                        </div>
                                     </div>
                                 <?php
                             endwhile;
@@ -277,7 +326,7 @@ Template Name: Список недвижимости
                                 <?php
                                 echo paginate_links( array(
                                     'base' => get_permalink(92) . '%_%',
-                                    'format' => '?new-objects=%#%',
+                                    'format' => '?for-rent=%#%',
                                     'total' => $query->max_num_pages,
                                     'current' => $current_page,
                                 ) );

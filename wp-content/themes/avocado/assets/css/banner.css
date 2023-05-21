@@ -1,4 +1,5 @@
 .banner {
+    margin-top: 189px;
     margin-bottom: 40px;
 }
 .banner-wrapper {
@@ -36,7 +37,7 @@
     height: 18px;
     border-radius: 50%;
     opacity: 0.35;
-    background-color: #82b723;
+    background-color: var(--main-button-color);
 }
 .dot:hover, .dot_active {
     opacity: 1;
@@ -53,10 +54,10 @@
     color: #ffffff;
 }
 .banner-btn {
-    background-color: #82b723;
+    background-color: var(--main-button-color);
     font-size: 18px;
     font-weight: 300;
-    color: #ffffff;
+    color: var(--main-bg-color);
     padding: 22px 43px 22px 43px;
 }
 

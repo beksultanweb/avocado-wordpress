@@ -16,18 +16,47 @@
     <header class="first_header">
         <div class="container">
             <nav class="header__nav">
-                <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/location.svg" alt="location"><div class="nav-text">Аланья, Турция</div></div>
+            <?php $queried_object = get_queried_object();
+            $parentCName = get_cat_name($queried_object -> parent);
+            ?>
+                <div class="nav-items"><img class="icon icon-white" src="<?php echo bloginfo('template_url'); ?>/assets/icons/location.svg" alt="location"><div class="nav-text current_city">
+                <?php
+                if($parentCName == 'Города') {
+                    echo $queried_object->name;
+                }
+                else {
+                    echo 'Аланья';
+                }; ?></div></div>
                 <div class="nav-gap">
-                    <div class="mobile">
-                        <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_1', 2) ?></div></div>
-                        <div class="nav-items"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_2', 2) ?></div></div>
+                    <div class="mobile soc_media">
+                        <a href="<?php the_field('telegram_link'); ?>"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/telegram.svg" alt="telegram"></a>
+                        <a href="<?php the_field('fb_link'); ?>"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/fb.svg" alt="fb"></a>
+                        <a href="<?php the_field('youtube_link'); ?>"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/youtube.svg" alt="youtube"></a>
+                        <a href="<?php the_field('vk_link'); ?>"><img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/vk.svg" alt="vk"></a>
+                        <a href="https://instagram.com/<?php the_field('insta_link'); ?>"><img class="icon icon-white" src="<?php echo bloginfo('template_url'); ?>/assets/icons/instagram.svg" alt="instagram"></a>
+                        <a href="https://wa.me/<?php the_field('phone_1', 2); ?>"><img class="icon icon-white" src="<?php echo bloginfo('template_url'); ?>/assets/icons/whatsapp.svg" alt="whatsapp"></a>
                     </div>
-                    <a href="https://wa.me/<?php the_field('phone_1', 2); ?>"><button class="whatsapp">Написать в WhatsApp</button></a>
-                    <button class="back-call popup-link">Обратный звонок</button>
+                    <div class="mobile phone_number">
+                        <a href="tel: <?php the_field('phone_1', 2) ?>" class="nav-items"><img class="icon icon-white" src="<?php echo bloginfo('template_url'); ?>/assets/icons/phone.svg" alt="phone"><div class="nav-text"><?php the_field('phone_1', 2) ?></div></a>
+                    </div>
+                    <button class="back-call popup-link">Заказать звонок</button>
+                    <?php echo do_shortcode('[gtranslate]') ?>
                 </div>
             </nav>
         </div>
     </header>
+    <div class="container">
+        <div class="choose_city">
+            <?php
+                $cities = get_categories(array('parent' => 15));
+                foreach($cities as $city) {
+                    ?>
+                    <a href="<?php echo get_category_link($city -> cat_ID); ?>"><?php echo $city -> name; ?></a>
+                    <?php
+                }
+            ?>
+        </div>
+    </div>
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -45,6 +74,7 @@
                     <a href="<?php echo get_permalink(171); ?>"><li class="menu__item">О компании</li></a>
                     <a href="<?php echo get_permalink(216); ?>"><li class="menu__item">Услуги</li></a>
                     <a href="<?php echo get_permalink(169); ?>"><li class="menu__item">Отзывы</li></a>
+                    <a href="<?php echo get_permalink(326); ?>"><li class="menu__item">Избранное</li></a>
                     <a href="<?php echo get_permalink(234); ?>"><li class="menu__item">Контакты</li></a>
                 </ul>
                 <div class="burger">

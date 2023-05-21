@@ -3,7 +3,9 @@
     scroll-behavior: smooth;
     scrollbar-width: none;
     width: 100%;
-    margin-top: 69px;
+}
+.videos {
+    padding-bottom: 50px;
 }
 .videos-wrapper::-webkit-scrollbar {
     height: 0;
@@ -30,7 +32,7 @@ iframe {
     height: 18px;
     border-radius: 50%;
     opacity: 0.35;
-    background-color: #82b723;
+    background-color: var(--main-bg-color);
 }
 .videos-dot:hover, .testimonal-dot_active {
     opacity: 1;

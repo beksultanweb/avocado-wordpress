@@ -1,6 +1,6 @@
-.search {
-    background-color: #82b723;
-    padding-top: 48px;
+.search, .comand {
+    background-color: var(--main-bg-color);
+    padding-top: 40px;
     padding-bottom: 47px;
 }
 .title {
@@ -13,7 +13,14 @@
     margin-top: 31px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px 60px;
+    gap: 20px 100px;
+}
+.category {
+    position: relative;
+}
+.category > input {
+    position: absolute;
+    opacity: 0;
 }
 .price-input {
     display: flex;
@@ -24,21 +31,21 @@
 .search__label {
     display: flex;
     flex-direction: column;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 300;
     color: #ffffff;
 }
-.mult-select-tag .body {
+.ss-main {
+    border-radius: 10px;
+    border: none;
     margin-top: 12px;
     background-color: rgba(255, 255, 255, .22);
+    color: #fff;
+    padding-left: 17px;
+    height: 35px;
 }
-.mult-select-tag ul li, option {
-    color: #000;
-}
-.mult-select-tag .item-container {
-    background: #fff;
-    border: none;
-    color: #000;
+.ss-placeholder {
+    color: #fff !important;
 }
 .search-input::-webkit-outer-spin-button,
 .search-input::-webkit-inner-spin-button {
@@ -49,17 +56,26 @@
   -moz-appearance: textfield;
   width: 150px;
 }
-select, .search-input {
+select {
+    cursor: pointer;
+}
+.search-input {
     margin-top: 12px;
     background-color: rgba(255, 255, 255, .22);
     width: 100%;
-    height: 40px;
+    height: 35px;
     color: #fff;
     border: none;
     padding-left: 17px;
     padding-right: 17px;
     border-radius: 10px;
     appearance: none;
+}
+#location {
+    /* position: relative; */
+}
+#locat_cont {
+    /* position: absolute; */
 }
 .search-input {
     margin-top: 0;
@@ -68,13 +84,14 @@ select, .search-input {
     color: #fff;
 }
 .search__btn {
-    background-color: #0f100d;
-    color: #ffffff;
+    background-color: var(--main-button-color);
+    color: var(--main-bg-color);
     font-size: 24px;
     height: 56px;
     font-weight: 300;
     padding: 15px 86px 15px 86px;
-    align-self: flex-end;
+    margin: 40px auto 0 auto;
+    display: block;
 }
 
 @media (max-width: 1000px) {

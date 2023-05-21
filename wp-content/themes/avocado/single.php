@@ -45,11 +45,11 @@ get_header();
                         <div class="tabs__title"><?php the_title(); ?></div>
                         <div class="tabs__info">
                             <div class="tabs__graphics">
-                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
+                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/flat.svg" alt="building">
                                 <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                             </div>
                             <div class="tabs__graphics">
-                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
+                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/meters.svg" alt="square">
                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                             </div>
                         </div>

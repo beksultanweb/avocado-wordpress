@@ -54,14 +54,54 @@
             </div>
         </div>
     </section>
+    <section class="cats_section">
+        <div class="container">
+            <div class="cats">
+                <?php $new_id = get_cat_ID( 'Новые объекты' );
+                $sea_id = get_cat_ID('Ближе к морю');
+                $hot_id = get_cat_ID('Горячие предложения');
+                $pool_id = get_cat_ID('С бассейном');
+                $villa_id = get_cat_ID('Виллы на продажу');
+                $invest_id = get_cat_ID('Для инвестиции');
+                ?>
+                <a href="<?php echo get_category_link($new_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/new.png" alt="new">
+                    <div class="cat_name">Новые объекты</div>
+                </a>
+                <a href="<?php echo get_category_link($sea_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/sea.png" alt="sea">
+                    <div class="cat_name">Близко к морю</div>
+                </a>
+                <a href="<?php echo get_category_link($hot_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/hot.png" alt="hot">
+                    <div class="cat_name">Горящие предложения</div>
+                </a>
+                <a href="<?php echo get_category_link($pool_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/pool.png" alt="pool">
+                    <div class="cat_name">С бассейном</div>
+                </a>
+                <a href="<?php echo get_category_link($villa_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/villa.png" alt="villa">
+                    <div class="cat_name">Виллы на продажу</div>
+                </a>
+                <a href="<?php echo get_category_link($invest_id); ?>" class="category">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/invest.png" alt=invest">
+                    <div class="cat_name">Для инвестиции</div>
+                </a>
+            </div>
+        </div>
+    </section>
     <section class="search">
         <div class="container">
             <h2 class="title">Поиск недвижимости</h2>
             <div>
-                <form class="search__body" action="search" onsubmit="return validateForm()" method="GET">
+                <form action="search" onsubmit="return validateForm()" method="GET">
+                <div class="search__body">
                 <?php
+                    $sale_id = get_cat_ID('На продажу');
+                    $rent_id = get_cat_ID('В аренду');
                     $posts = get_posts( array(
-                            'category' => array(6, 7),
+                            'category' => array($sale_id, $rent_id),
                             'numberposts' => -1,
                             'orderby' => 'date',
                             'order' => 'DESC',
@@ -69,8 +109,27 @@
                             'suppress_filters' => true
                     ));
                     ?>
+                    <label class="search__label">Искать среди
+                        <div class="price-input">
+                            <label for="category">На продажу</label><input type="radio" checked name="category" id="category" value="for-sale">
+                            <label for="category">В аренду</label><input type="radio" name="category" id="category" value="for-rent">
+                        </div>
+                    </label>
+                    <label class="search__label">Город
+                    <select name="city" id="city">
+                        <option value="" selected>Любой город</option>
+                        <?php
+                            $cities = get_categories(array('parent' => 15));
+                            foreach($cities as $cit) {
+                            ?>
+                            <option value="<?php echo $cit -> name; ?>"><?php echo $cit -> name; ?></option>
+                            <?php
+                            }
+                        ?>
+                    </select>
+                    </label>
                     <label class="search__label">Местоположение
-                    <select name="location[]" id="location" multiple>
+                    <select name="location[]" id="location" multiple="multiple">
                         <?php foreach($location as $val) {
                             ?>
                                 <option value="<?php echo $val; ?>" selected><?php echo $val; ?></option>
@@ -100,9 +159,10 @@
                     }
                         ?>
                     </select>
+                    <div id="locat_cont"></div>
                     </label>
                     <label class="search__label">Вид недвижимости
-                    <select name="type[]" id="type" multiple>
+                    <select name="type[]" id="type" multiple="multiple">
                         <?php foreach($type as $val) {
                             ?>
                                 <option value="<?php echo $val; ?>" selected><?php echo $val; ?></option>
@@ -220,6 +280,7 @@
                     <?php
                     wp_reset_postdata();
                 ?>
+                </div>
                 <button class="search__btn">Поиск</button>
                 </form>
             </div>
@@ -229,41 +290,54 @@
         <div class="container">
             <div class="active__tabs">
                 <input type="radio" name="active__tabs" id="btn-1" class="btn-1">
-                <label for="btn-1" class="btn">Горячие предложения</label>
+                <label for="btn-1" class="btn">Продажа</label>
                 <input type="radio" name="active__tabs" id="btn-2" class="btn-2">
-                <label for="btn-2" class="btn">Новые объекты</label>
+                <label for="btn-2" class="btn">Аренда</label>
                 <div class="tabs__body">
                     <div class="tabs__block">
                         <?php
                             $posts = get_posts( array(
                                 'numberposts' => 6,
-                                'category_name' => 'hot_deals',
+                                'category_name' => 'for-sale',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
                                 'post_type' => 'post',
                                 'suppress_filters' => true,
                             ));
                             foreach( $posts as $post ) {
+                                $city = get_the_category($post->ID);
                                 setup_postdata($post)
                                 ?>
                                     <div class="tabs__item">
                                         <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
+                                        <div class="tabs__sub">
+                                            <div class="tabs__city"><?php echo $city[0] -> name; ?></div>
+                                            <div class="tabs__ID"><?php the_field('property_ID') ?></div>
+                                        </div>
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/flat.svg" alt="building">
                                                 <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/meters.svg" alt="square">
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?> кв.м.</div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                        <div class="tabs__price">
                                             <?php
                                                 $price = get_field('property_price');
                                                 echo number_format($price, 0, ',', ' ');
-                                            ?> EUR</button></a>
+                                            ?> EUR</div>
+                                        <div class="tabs__btns">
+                                            <a href="<?php echo get_permalink(); ?>">
+                                                <button class="tabs__btn">
+                                                    Подробнее
+                                                </button>
+                                            </a>
+                                            <?php echo do_shortcode('[favorite_button]') ?>
+                                        </div>
                                     </div>
                                 <?php
                             }
@@ -274,33 +348,46 @@
                         <?php
                             $posts = get_posts( array(
                                 'numberposts' => 6,
-                                'category_name' => 'new_objects',
+                                'category_name' => 'for-rent',
                                 'orderBy' => 'date',
                                 'order' => 'ASC',
                                 'post_type' => 'post',
                                 'suppress_filters' => true,
                             ));
                             foreach( $posts as $post ) {
+                                $city = get_the_category($post->ID);
                                 setup_postdata($post)
                                 ?>
                                     <div class="tabs__item">
                                         <img class="tabs__img" src="<?php the_field('property_img'); ?>" alt="property">
+                                        <div class="tabs__sub">
+                                            <div class="tabs__city"><?php echo $city[0] -> name; ?></div>
+                                            <div class="tabs__ID"><?php the_field('property_ID') ?></div>
+                                        </div>
                                         <div class="tabs__title"><?php the_title(); ?></div>
                                         <div class="tabs__info">
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/building.svg" alt="building">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/flat.svg" alt="building">
                                                 <div class="tabs__subtitle"><?php the_field('property_rooms'); ?></div>
                                             </div>
                                             <div class="tabs__graphics">
-                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/square.svg" alt="square">
+                                                <img class="icon" src="<?php echo bloginfo('template_url'); ?>/assets/icons/meters.svg" alt="square">
                                                 <div class="tabs__subtitle"><?php the_field('property_square'); ?></div>
                                             </div>
                                         </div>
-                                        <a href="<?php echo get_permalink(); ?>"><button class="tabs__btn">
+                                        <div class="tabs__price">
                                             <?php
-                                            $price = get_field('property_price');
-                                            echo number_format($price, 0, ',', ' ');
-                                            ?> EUR</button></a>
+                                                $price = get_field('property_price');
+                                                echo number_format($price, 0, ',', ' ');
+                                            ?> EUR</div>
+                                        <div class="tabs__btns">
+                                            <a href="<?php echo get_permalink(); ?>">
+                                                <button class="tabs__btn">
+                                                    Подробнее
+                                                </button>
+                                            </a>
+                                            <?php echo do_shortcode('[favorite_button]') ?>
+                                        </div>
                                     </div>
                                 <?php
                             }
@@ -312,6 +399,44 @@
             </div>
         </div>
     </main>
+    <section class="cats_section">
+        <div class="container">
+            <div class="cats">
+                <?php
+                $alanya_id = get_cat_ID('Аланья');
+                $antalya_id = get_cat_ID('Анталья');
+                $ankara_id = get_cat_ID('Анкара');
+                $stambul_id = get_cat_ID('Стамбул');
+                $kipr_id = get_cat_ID('Кипр');
+                $dubai_id = get_cat_ID('Дубай');
+                ?>
+                <a href="<?php echo get_category_link($alanya_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/new.png" alt="new">
+                    <div class="cat_name">Аланья</div>
+                </a>
+                <a href="<?php echo get_category_link($antalya_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/sea.png" alt="sea">
+                    <div class="cat_name">Анталья</div>
+                </a>
+                <a href="<?php echo get_category_link($stambul_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/hot.png" alt="hot">
+                    <div class="cat_name">Стамбул</div>
+                </a>
+                <a href="<?php echo get_category_link($ankara_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/pool.png" alt="pool">
+                    <div class="cat_name">Анкара</div>
+                </a>
+                <a href="<?php echo get_category_link($kipr_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/villa.png" alt="villa">
+                    <div class="cat_name">Кипр</div>
+                </a>
+                <a href="<?php echo get_category_link($dubai_id); ?>" class="category city_change">
+                    <img src="<?php echo bloginfo('template_url'); ?>/assets/images/invest.png" alt=invest">
+                    <div class="cat_name">Дубай</div>
+                </a>
+            </div>
+        </div>
+    </section>
     <section class="about">
         <div class="container">
             <div class="about__content">
@@ -426,7 +551,7 @@
             <a href="<?php echo get_permalink(252); ?>"><button class="see_more">Посмотреть еще</button></a>
         </div>
     </section>
-    <section class="search">
+    <section class="comand">
         <div class="container">
             <h2 class="team__title">Команда</h2>
             <div class="team">

@@ -2,6 +2,7 @@
 @import "./assets/css/normalize.css";
 @import "./assets/css/header.css";
 @import "./assets/css/banner.css";
+@import "./assets/css/cats.css";
 @import "./assets/css/search.css";
 @import "./assets/css/property.css";
 @import "./assets/css/about.css";
@@ -18,6 +19,23 @@
 /* property page */
 @import "./assets/css/property-page.css";
 
+:root {
+    --main-bg-color: #014782;
+    --main-button-color: #fff;
+    --main-white-bg-color: #e9f5ff;
+    --white: #fff;
+    --about-bg-color: rgba(1, 71, 130, .2);
+    --articles-bg-color: rgba(1, 71, 130, .1);
+}
+.simplefavorite-button {
+    cursor: pointer;
+}
+.search_page {
+    margin-top: 189px;
+}
+body {
+    background-color: var(--main-white-bg-color);
+}
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -46,6 +64,10 @@ button {
 @media (max-width: 667px) {
     .container {
         padding: 0 15px;
-        max-width: none;
+    }
+}
+@media (max-width: 370px) {
+    .container {
+        padding: 0 5px;
     }
 }

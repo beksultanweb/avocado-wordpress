@@ -4,7 +4,7 @@ Template Name: О компании
 */
 get_header();
 ?>
-<section class="about">
+<section class="about search_page">
     <div class="container">
         <div class="about__content">
             <div>

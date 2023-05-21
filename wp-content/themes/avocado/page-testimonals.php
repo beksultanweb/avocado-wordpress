@@ -4,7 +4,7 @@ Template Name: Отзывы
 */
 get_header();
 ?>
-<section class="testimonals">
+<section class="testimonals search_page">
     <div class="container">
         <h2 class="testimonal__h2">Отзывы клиентов</h2>
         <div class="testimonals__block">

@@ -1,7 +1,7 @@
 .articles {
-    background-color: #f2f8e9;
-    padding-top: 42px;
-    padding-bottom: 117px;
+    background-color: var(--articles-bg-color);
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 .articles__content {
     display: grid;

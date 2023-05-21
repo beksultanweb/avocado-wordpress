@@ -1,10 +1,10 @@
-.about {
-    background-color: #f2f8e9;
+.about, .videos {
+    background-color: var(--about-bg-color);
 }
 .about__content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 63px 35px 76px 35px;
+    padding: 40px 35px 40px 35px;
     gap: 37px
 }
 .about__title {

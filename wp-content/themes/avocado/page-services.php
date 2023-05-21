@@ -20,9 +20,12 @@ get_header();
             while( $posts->have_posts() ) : $posts->the_post();
             ?>
             <div class="service">
-                <div class="testimonal__name"><?php the_title(); ?></div>
-                <div class="testimonal__text"><?php the_field('service_descr'); ?></div>
-                <button class="service__btn popup-link">Консультация</button>
+                <img class="services__img" src="<?php the_field('service_img'); ?>" alt="service">
+                <div>
+                    <div class="testimonal__name"><?php the_title(); ?></div>
+                    <div class="testimonal__text"><?php the_field('service_descr'); ?></div>
+                    <button class="service__btn popup-link">Консультация</button>
+                </div>
             </div>
             <?php
             endwhile;

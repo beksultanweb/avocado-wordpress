@@ -5,19 +5,23 @@
     margin-top: 38px;
     margin-bottom: 34px;
 }
-.footer2 {
-    background-color: #f3f3f3;
-}
 .footer__content {
     padding-top: 22px;
     padding-bottom: 27px;
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.footer__item:nth-child(3), .footer__item:nth-child(4) {
+    justify-self: end;
 }
 
-@media (max-width: 805px) {
+@media (max-width: 853px) {
     .footer__content {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+    }
+    .footer__item:nth-child(3), .footer__item:nth-child(4) {
+        justify-self: start;
     }
 }
 .footer__text {
