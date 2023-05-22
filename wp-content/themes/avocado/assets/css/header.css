@@ -4,11 +4,11 @@
     height: 49px;
     justify-content: space-between;
 }
-.header, .first_header {
+header {
     position: fixed;
     width: 100%;
     z-index: 99;
-    top: 49px;
+    top: 0;
 }
 .header {
     background-color: var(--main-white-bg-color);
@@ -17,6 +17,21 @@
 }
 .burger {
     display: none;
+}
+.gt-item {
+    position: relative;
+    width: 160px;
+    align-self: flex-start;
+}
+.gt-item .gtranslate_wrapper {
+    position: absolute;
+    top: 0;
+}
+.gt_float_switcher .gt-selected .gt-current-lang {
+    padding: 5px 10px !important;
+}
+.gt_float_switcher {
+    border-radius: 10px !important;
 }
 .nav {
     display: flex;
@@ -46,9 +61,6 @@
     display: flex;
     align-items: center;
     gap: 15px;
-}
-.gtranslate_wrapper > a {
-    color: var(--white);
 }
 .nav-gap {
     display: flex;

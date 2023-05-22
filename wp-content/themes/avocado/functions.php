@@ -13,27 +13,66 @@ function internoetics_truncate_words($string, $limit, $trimmarker = '') {
 add_filter( 'favorites/list/listing/html', 'custom_favorites_listing_html', 10, 4 );
 function custom_favorites_listing_html($html, $markup_template, $post_id, $list_options)
 {
-    $price = get_field('property_price', $post_id);
+    $city = get_the_category($post_id);
+    $loop = CFS()-> get('flat', $post_id);
+    $price = []; $square = []; $type = [];
+    foreach($loop as $row) {
+        array_push($price, $row['flat_price']);
+        array_push($square, $row['flat_square']);
+        array_push($type, $row['flat_type']);
+    }
+    $frontend_square = count($square) > 1 ? min($square) . '-' . max($square) : min($square);
     $html = '
         <div class="tabs__item">
             <img class="tabs__img" src="' . get_field('property_img', $post_id) . '" alt="property">
+            <div class="tabs__sub">
+                <div class="tabs__city">' . $city[0] -> name . '</div>
+                <div class="tabs__ID">' . get_field('property_ID', $post_id) . '</div>
+            </div>
             <div class="tabs__title">' . get_the_title($post_id) . '</div>
             <div class="tabs__info">
                 <div class="tabs__graphics">
-                    <img class="icon" src="' . get_bloginfo('template_url', $post_id) . '/assets/icons/flat.svg" alt="building">
-                    <div class="tabs__subtitle">' . get_field('property_rooms', $post_id) . '</div>
+                    <img class="icon" src="' . get_bloginfo('template_url') . '/assets/icons/flat.svg" alt="building">
+                    <div class="tabs__subtitle">' . implode(', ', $type) . '</div>
                 </div>
                 <div class="tabs__graphics">
                     <img class="icon" src="' . get_bloginfo('template_url') . '/assets/icons/meters.svg" alt="square">
-                    <div class="tabs__subtitle">' . get_field('property_square', $post_id) . ' кв.м.</div>
+                    <div class="tabs__subtitle">' . $frontend_square . ' кв.м.</div>
                 </div>
             </div>
-            <a href="' . get_permalink($post_id) . '"><button class="tabs__btn">
-                ' . number_format($price, 0, ',', ' ') . ' EUR</button></a>
+            <div class="tabs__price">
+                ' . number_format(min($price), 0, ',', ' ') . ' EUR</div>
+            <div class="tabs__btns one_btn">
+                <a href="' . get_permalink($post_id) . '">
+                    <button class="tabs__btn">
+                        Подробнее
+                    </button>
+                </a>
+            </div>
         </div>';
 	return $html;
 }
 
+
+add_filter( 'favorites/button/html', 'custom_favorites_button_html', 10, 4 );
+function custom_favorites_button_html($html, $post_id, $favorited, $site_id)
+{
+    if(is_single()) {
+        $html = $favorited ? 'Добавить в избранное' : 'В избранном';
+        $favorited = !$favorited;
+    }
+
+	return $html;
+}
+
+add_filter( 'favorites/button/css_classes', 'custom_favorites_button_css_classes', 10, 3 );
+function custom_favorites_button_css_classes($classes, $post_id, $site_id)
+{
+    if(is_single()) {
+        $classes = $classes . ' fav-custom';
+    }
+	return $classes;
+}
 
 function avocado_scripts() {
     if(is_single()) {

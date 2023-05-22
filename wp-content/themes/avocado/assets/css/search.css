@@ -71,11 +71,15 @@ select {
     border-radius: 10px;
     appearance: none;
 }
-#location {
-    /* position: relative; */
+.location_local, .city_local, .type_local, .id_local, .rooms_local {
+    position: relative;
 }
-#locat_cont {
-    /* position: absolute; */
+.ss-content {
+    width: 100%;
+}
+.ss-content.ss-relative {
+    position: absolute !important;
+    height: auto;
 }
 .search-input {
     margin-top: 0;

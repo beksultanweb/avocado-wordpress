@@ -5,7 +5,7 @@ Template Post Type: post, stati
 */
 get_header();
 ?>
-    <section class="article-page">
+    <section class="article-page search_page">
         <div class="container">
         <?php
         while ( have_posts() ) : the_post();

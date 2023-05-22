@@ -104,6 +104,17 @@
     align-items: center;
     margin-bottom: 10px;
 }
+.fav-custom {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    text-align: left;
+    font-size: inherit !important;
+}
 .pr_id {
     font-size: 16px;
     color: #000;
@@ -139,6 +150,7 @@ form > p {
 .property-photos__main-photo {
     width: 100%;
     border-radius: 20px;
+    height: 420px;
 }
 .property-photos__photo {
     width: 135px;
@@ -272,10 +284,12 @@ ymaps {
     grid-template-columns: 38% 62%;
 }
 .property-location {
+    height: 100%;
     margin-top: 40px;
-    margin-bottom: 76px;
-    background-color: #f3f3f3;
-    padding-bottom: 40px;
+    padding-top: 40px;
+    margin-bottom: 40px;
+    background-color: var(--white);
+    padding-bottom: 140px;
 }
 .property-info__content {
     margin: 0 auto;

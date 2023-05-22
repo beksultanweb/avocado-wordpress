@@ -75,6 +75,15 @@
     align-items: end;
     gap: 11px;
 }
+.one_btn {
+    grid-template-columns: 1fr !important;
+}
+.simplefavorites-clear {
+    background-color: var(--main-bg-color);
+    color: #fff;
+    padding: 5px 25px;
+    font-size: 20px;
+}
 .tabs__btn, .simplefavorite-button {
     background-color: var(--main-bg-color);
     width: 100%;
@@ -123,8 +132,7 @@
     font-size: 24px;
     font-weight: 300;
     background-color: var(--main-bg-color);
-    width: 368px;
-    height: 72px;
+    padding: 10px 25px;
     display: block;
     margin: 50px auto 0 auto;
 }

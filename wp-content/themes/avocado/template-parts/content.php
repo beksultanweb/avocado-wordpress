@@ -9,8 +9,7 @@
                         foreach($loop as $row) {
                             array_push($array, $row['flat_price']);
                         }
-
-                        echo number_format(min($array), 0, ',', ' ') . ' - € ' . number_format(max($array), 0, ',', ' ');
+                        echo count($array) > 1 ? number_format(min($array), 0, ',', ' ') . ' - € ' . number_format(max($array), 0, ',', ' ') : number_format(min($array), 0, ',', ' ');
                     ?></div>
             </div>
             <div class="property-additional-information">
@@ -164,7 +163,7 @@
     </section>
     <section class="property-info">
         <div class="container">
-            <h2 class="property-info__title">Информация о недвижимости</h2>
+            <h2 class="property-info__title">Инфраструктура</h2>
             <div class="property-info__content">
                 <div class="additional_convenience">
                 <?php
